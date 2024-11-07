@@ -6,7 +6,7 @@
 /*   By: yulpark <yulpark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 20:06:48 by yulpark           #+#    #+#             */
-/*   Updated: 2024/11/07 19:45:51 by yulpark          ###   ########.fr       */
+/*   Updated: 2024/11/07 20:14:34 by yulpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ static char	*ft_findn(int fd, char *result)
 		if (!result)
 			result = ft_strdup("");
 		result = ft_free(result, buffer);
+		if (!result)
+		{
+			free(buffer);
+			return(NULL);
+		}
 		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
@@ -79,7 +84,7 @@ static char	*ft_lineprinter(char	*buffer)
 	return (result);
 }
 
-static char	*ft_nextkeeper(char *buffer, char **tofree)
+static char	*ft_nextkeeper(char *buffer)
 {
 	char	*result;
 	int		i;
@@ -98,7 +103,6 @@ static char	*ft_nextkeeper(char *buffer, char **tofree)
 	if (!result)
 	{
 		free(buffer);
-		*tofree = NULL;
 		return (NULL);
 	}
 	j = 0;
@@ -137,7 +141,7 @@ char	*get_next_line(int fd)
 		buffer = NULL;
 		return (NULL);
 	}
-	buffer = ft_nextkeeper(buffer, &result);
+	buffer = ft_nextkeeper(buffer);
 	return (result);
 }
 //int main()
